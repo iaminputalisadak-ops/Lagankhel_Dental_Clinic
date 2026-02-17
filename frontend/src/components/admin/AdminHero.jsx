@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import ImageUpload from './ImageUpload';
 
 const API_URL = '/api';
 
@@ -64,7 +65,7 @@ export default function AdminHero() {
       subtitle: 'YOUR SMILE IS OUR PRIDE',
       title: 'Lagankhel Dental Clinic',
       tagline: 'Best Dental Clinic in Lalitpur',
-      background_image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=1920',
+      background_image: '',
       overlay_opacity: 0.5,
       text_position: 'center',
       btn1_text: 'Book Appointment',
@@ -94,7 +95,7 @@ export default function AdminHero() {
       </div>
       <button className="btn-primary" onClick={addNew}>Add New Slide</button>
 
-      {(editing || form.background_image) && (
+      {(editing || form.subtitle || form.background_image) && (
         <form className="admin-form" onSubmit={saveSlide}>
           <h3>{editing ? 'Edit Slide' : 'New Slide'}</h3>
           <label>Subtitle</label>
@@ -103,8 +104,7 @@ export default function AdminHero() {
           <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} required />
           <label>Tagline</label>
           <input value={form.tagline} onChange={e => setForm({ ...form, tagline: e.target.value })} />
-          <label>Background Image URL</label>
-          <input value={form.background_image} onChange={e => setForm({ ...form, background_image: e.target.value })} required />
+          <ImageUpload value={form.background_image} onChange={v => setForm({ ...form, background_image: v })} label="Background Image" required prefix="he" />
           <label>Overlay Opacity (0-1)</label>
           <input type="number" step="0.1" min="0" max="1" value={form.overlay_opacity} onChange={e => setForm({ ...form, overlay_opacity: e.target.value })} />
           <label>Text Position</label>

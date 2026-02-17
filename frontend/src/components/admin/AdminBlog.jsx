@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import RichTextEditor from './RichTextEditor';
+import ImageUpload from './ImageUpload';
 
 const API_URL = '/api';
 
 export default function AdminBlog() {
   const [posts, setPosts] = useState([]);
   const [editing, setEditing] = useState(null);
+  const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ title: '', slug: '', excerpt: '', content: '', category: '', image_url: '', author: 'Lagankhel Dental Clinic', published: 1 });
   const [message, setMessage] = useState({ type: '', text: '' });
   const [loading, setLoading] = useState(true);
@@ -37,6 +39,7 @@ export default function AdminBlog() {
       if (data.success) {
         setMessage({ type: 'success', text: data.message });
         setEditing(null);
+        setShowForm(false);
         setForm({ title: '', slug: '', excerpt: '', content: '', category: '', image_url: '', author: 'Lagankhel Dental Clinic', published: 1 });
         fetchPosts();
       } else setMessage({ type: 'error', text: data.message || 'Failed' });
@@ -46,6 +49,7 @@ export default function AdminBlog() {
   };
 
   const editPost = (p) => {
+    setShowForm(true);
     setEditing(p);
     setForm({
       title: p.title || '',
@@ -60,6 +64,7 @@ export default function AdminBlog() {
   };
 
   const addNew = () => {
+    setShowForm(true);
     setEditing(null);
     setForm({
       title: '',
@@ -67,7 +72,7 @@ export default function AdminBlog() {
       excerpt: '',
       content: '',
       category: 'Dental Braces',
-      image_url: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600',
+      image_url: '',
       author: 'Lagankhel Dental Clinic',
       published: 1
     });
@@ -108,7 +113,7 @@ export default function AdminBlog() {
       </div>
       <button className="btn-primary" onClick={addNew}>Add New Post</button>
 
-      {(editing || form.title || form.image_url) && (
+      {showForm && (
         <form className="admin-form admin-blog-form" onSubmit={savePost}>
           <h3>{editing ? 'Edit Post' : 'New Post'}</h3>
           <label>Title</label>
@@ -117,8 +122,7 @@ export default function AdminBlog() {
           <input value={form.slug} onChange={e => setForm({ ...form, slug: e.target.value })} placeholder="auto-generated from title" />
           <label>Category</label>
           <input value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} placeholder="e.g. Dental Braces" />
-          <label>Featured Image URL</label>
-          <input value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} />
+          <ImageUpload value={form.image_url} onChange={v => setForm({ ...form, image_url: v })} label="Featured Image" prefix="bl" />
           <label>Excerpt</label>
           <RichTextEditor value={form.excerpt} onChange={v => setForm({ ...form, excerpt: v })} placeholder="Brief summary..." simple />
           <label>Content</label>
@@ -128,7 +132,7 @@ export default function AdminBlog() {
           <label><input type="checkbox" checked={!!form.published} onChange={e => setForm({ ...form, published: e.target.checked ? 1 : 0 })} /> Published</label>
           <div className="admin-form-actions">
             <button type="submit" className="btn-primary">Save</button>
-            <button type="button" className="btn-outline" onClick={() => { setEditing(null); setForm({}); }}>Cancel</button>
+            <button type="button" className="btn-outline" onClick={() => { setShowForm(false); setEditing(null); setForm({ title: '', slug: '', excerpt: '', content: '', category: '', image_url: '', author: 'Lagankhel Dental Clinic', published: 1 }); }}>Cancel</button>
           </div>
         </form>
       )}

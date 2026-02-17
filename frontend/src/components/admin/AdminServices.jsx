@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import ImageUpload from './ImageUpload';
 
 const API_URL = '/api';
 
 export default function AdminServices() {
   const [services, setServices] = useState([]);
   const [editing, setEditing] = useState(null);
+  const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ title: '', image_url: '', link: '/treatments', sort_order: 0 });
   const [message, setMessage] = useState({ type: '', text: '' });
   const [loading, setLoading] = useState(true);
@@ -34,6 +36,7 @@ export default function AdminServices() {
       if (data.success) {
         setMessage({ type: 'success', text: data.message });
         setEditing(null);
+        setShowForm(false);
         setForm({ title: '', image_url: '', link: '/treatments', sort_order: 0 });
         fetchServices();
       } else setMessage({ type: 'error', text: data.message || 'Failed' });
@@ -43,6 +46,7 @@ export default function AdminServices() {
   };
 
   const editService = (s) => {
+    setShowForm(true);
     setEditing(s);
     setForm({
       title: s.title || '',
@@ -53,10 +57,11 @@ export default function AdminServices() {
   };
 
   const addNew = () => {
+    setShowForm(true);
     setEditing(null);
     setForm({
       title: '',
-      image_url: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600',
+      image_url: '',
       link: '/treatments',
       sort_order: services.length
     });
@@ -94,20 +99,19 @@ export default function AdminServices() {
       </div>
       <button className="btn-primary" onClick={addNew}>Add New Service</button>
 
-      {(editing || form.image_url) && (
+      {showForm && (
         <form className="admin-form" onSubmit={saveService}>
           <h3>{editing ? 'Edit Service' : 'New Service'}</h3>
           <label>Title</label>
           <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} required />
-          <label>Image URL</label>
-          <input value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} required />
+          <ImageUpload value={form.image_url} onChange={v => setForm({ ...form, image_url: v })} label="Image" required prefix="sv" />
           <label>Link (Learn More)</label>
           <input value={form.link} onChange={e => setForm({ ...form, link: e.target.value })} />
           <label>Sort Order</label>
           <input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })} />
           <div className="admin-form-actions">
             <button type="submit" className="btn-primary">Save</button>
-            <button type="button" className="btn-outline" onClick={() => { setEditing(null); setForm({}); }}>Cancel</button>
+            <button type="button" className="btn-outline" onClick={() => { setShowForm(false); setEditing(null); setForm({ title: '', image_url: '', link: '/treatments', sort_order: 0 }); }}>Cancel</button>
           </div>
         </form>
       )}

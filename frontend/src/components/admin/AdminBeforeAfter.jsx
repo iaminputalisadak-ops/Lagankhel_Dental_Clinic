@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const API_URL = '/api';
 
@@ -8,6 +8,39 @@ export default function AdminBeforeAfter() {
   const [form, setForm] = useState({ before_image_url: '', after_image_url: '', title: '', category: 'general', sort_order: 0 });
   const [message, setMessage] = useState({ type: '', text: '' });
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [uploading, setUploading] = useState({ before: false, after: false });
+  const beforeInputRef = useRef(null);
+  const afterInputRef = useRef(null);
+
+  const uploadFile = async (file, field) => {
+    if (!file || !file.type.startsWith('image/')) {
+      setMessage({ type: 'error', text: 'Please select an image (JPG, PNG, GIF, WebP)' });
+      return;
+    }
+    setUploading(prev => ({ ...prev, [field]: true }));
+    setMessage({ type: '', text: '' });
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('prefix', 'ba');
+    try {
+      const res = await fetch(`${API_URL}/upload.php`, {
+        method: 'POST',
+        body: fd,
+        credentials: 'include'
+      });
+      const data = await res.json();
+      if (data.success) {
+        setForm(prev => ({ ...prev, [field === 'before' ? 'before_image_url' : 'after_image_url']: data.url }));
+      } else {
+        setMessage({ type: 'error', text: data.message || 'Upload failed' });
+      }
+    } catch (err) {
+      setMessage({ type: 'error', text: 'Upload failed. Is the PHP server running?' });
+    } finally {
+      setUploading(prev => ({ ...prev, [field]: false }));
+    }
+  };
 
   const fetchCases = () => {
     fetch(`${API_URL}/admin/before_after.php`, { credentials: 'include' })
@@ -35,6 +68,7 @@ export default function AdminBeforeAfter() {
       if (data.success) {
         setMessage({ type: 'success', text: data.message });
         setEditing(null);
+        setShowForm(false);
         setForm({ before_image_url: '', after_image_url: '', title: '', category: 'general', sort_order: 0 });
         fetchCases();
       } else setMessage({ type: 'error', text: data.message || 'Failed' });
@@ -44,6 +78,7 @@ export default function AdminBeforeAfter() {
   };
 
   const editCase = (c) => {
+    setShowForm(true);
     setEditing(c);
     setForm({
       before_image_url: c.before_image_url || '',
@@ -55,10 +90,11 @@ export default function AdminBeforeAfter() {
   };
 
   const addNew = () => {
+    setShowForm(true);
     setEditing(null);
     setForm({
-      before_image_url: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600',
-      after_image_url: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600',
+      before_image_url: '',
+      after_image_url: '',
       title: '',
       category: 'general',
       sort_order: cases.length
@@ -100,13 +136,37 @@ export default function AdminBeforeAfter() {
       </div>
       <button className="btn-primary" onClick={addNew}>Add New Case</button>
 
-      {(editing || form.before_image_url) && (
+      {showForm && (
         <form className="admin-form" onSubmit={saveCase}>
           <h3>{editing ? 'Edit Case' : 'New Case'}</h3>
-          <label>Before Image URL</label>
-          <input value={form.before_image_url} onChange={e => setForm({ ...form, before_image_url: e.target.value })} required />
-          <label>After Image URL</label>
-          <input value={form.after_image_url} onChange={e => setForm({ ...form, after_image_url: e.target.value })} required />
+          <label>Before Image</label>
+          <div className="admin-upload-row">
+            <input
+              ref={beforeInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/gif,image/webp"
+              onChange={e => { const f = e.target.files?.[0]; if (f) uploadFile(f, 'before'); e.target.value = ''; }}
+              style={{ display: 'none' }}
+            />
+            <button type="button" className="btn-outline" onClick={() => beforeInputRef.current?.click()} disabled={uploading.before}>
+              {uploading.before ? 'Uploading...' : 'Choose Before Image'}
+            </button>
+            {form.before_image_url && <img src={form.before_image_url} alt="Before preview" className="admin-upload-preview" />}
+          </div>
+          <label>After Image</label>
+          <div className="admin-upload-row">
+            <input
+              ref={afterInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/gif,image/webp"
+              onChange={e => { const f = e.target.files?.[0]; if (f) uploadFile(f, 'after'); e.target.value = ''; }}
+              style={{ display: 'none' }}
+            />
+            <button type="button" className="btn-outline" onClick={() => afterInputRef.current?.click()} disabled={uploading.after}>
+              {uploading.after ? 'Uploading...' : 'Choose After Image'}
+            </button>
+            {form.after_image_url && <img src={form.after_image_url} alt="After preview" className="admin-upload-preview" />}
+          </div>
           <label>Title</label>
           <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} placeholder="e.g. Dental Restoration" />
           <label>Category</label>
@@ -114,8 +174,8 @@ export default function AdminBeforeAfter() {
           <label>Sort Order</label>
           <input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })} />
           <div className="admin-form-actions">
-            <button type="submit" className="btn-primary">Save</button>
-            <button type="button" className="btn-outline" onClick={() => { setEditing(null); setForm({}); }}>Cancel</button>
+            <button type="submit" className="btn-primary" disabled={!form.before_image_url || !form.after_image_url}>Save</button>
+            <button type="button" className="btn-outline" onClick={() => { setShowForm(false); setEditing(null); setForm({ before_image_url: '', after_image_url: '', title: '', category: 'general', sort_order: 0 }); }}>Cancel</button>
           </div>
         </form>
       )}

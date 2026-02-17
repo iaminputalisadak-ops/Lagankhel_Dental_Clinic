@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import RichTextEditor from './RichTextEditor';
+import ImageUpload from './ImageUpload';
 
 const API_URL = '/api';
 
@@ -49,8 +50,7 @@ export default function AdminAboutPage() {
         <input value={content.section_heading} onChange={e => setContent({ ...content, section_heading: e.target.value })} />
         <label>Page Title</label>
         <input value={content.page_title} onChange={e => setContent({ ...content, page_title: e.target.value })} />
-        <label>Main Image URL</label>
-        <input value={content.main_image_url} onChange={e => setContent({ ...content, main_image_url: e.target.value })} />
+        <ImageUpload value={content.main_image_url} onChange={v => setContent({ ...content, main_image_url: v })} label="Main Image" prefix="ap" />
         <label>Intro Paragraph</label>
         <RichTextEditor value={content.intro_paragraph} onChange={v => setContent({ ...content, intro_paragraph: v })} placeholder="Clinic introduction..." simple />
         <h4>CTA Banner (Invisalign)</h4>

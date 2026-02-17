@@ -35,21 +35,27 @@ export default function BeforeAfterSlider({ beforeImage, afterImage, title }) {
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="before-after-slider"
-      onMouseDown={handleMouseDown}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-    >
-      <div className="ba-before" style={{ backgroundImage: `url(${beforeImage})` }} />
+    <div className="before-after-card">
+      <div className="ba-labels">
+        <span className="ba-label ba-label-before">Before</span>
+        <span className="ba-label ba-label-after">After</span>
+      </div>
       <div
-        className="ba-after"
-        style={{
-          backgroundImage: `url(${afterImage})`,
-          clipPath: `inset(0 ${100 - position}% 0 0)`
-        }}
-      />
+        ref={containerRef}
+        className="before-after-slider"
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+      >
+        <div className="ba-before" style={{ backgroundImage: `url(${beforeImage})` }} aria-label="Before" />
+        <div
+          className="ba-after"
+          style={{
+            backgroundImage: `url(${afterImage})`,
+            clipPath: `inset(0 ${100 - position}% 0 0)`
+          }}
+          aria-label="After"
+        />
       <div
         className="ba-handle"
         style={{ left: `${position}%` }}
@@ -64,6 +70,7 @@ export default function BeforeAfterSlider({ beforeImage, afterImage, title }) {
         </div>
       </div>
       {title && <p className="ba-title">{title}</p>}
+      </div>
     </div>
   );
 }

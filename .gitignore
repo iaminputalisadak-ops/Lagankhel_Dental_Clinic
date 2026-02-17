@@ -4,6 +4,10 @@ node_modules/
 # Build output
 frontend/dist/
 
+# Uploaded files (keep uploads folder via .gitkeep)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
 # Environment
 .env
 .env.local
@@ -12,6 +16,7 @@ frontend/dist/
 # IDE
 .idea/
 .vscode/
+.cursor/
 *.swp
 *.swo
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import ImageUpload from './ImageUpload';
 
 const API_URL = '/api';
 
@@ -59,8 +60,7 @@ export default function AdminAbout() {
         <input value={content.feature2_title} onChange={e => setContent({ ...content, feature2_title: e.target.value })} />
         <label>Feature 2 Description</label>
         <textarea value={content.feature2_desc} onChange={e => setContent({ ...content, feature2_desc: e.target.value })} rows="2" />
-        <label>Image URL</label>
-        <input value={content.image_url} onChange={e => setContent({ ...content, image_url: e.target.value })} />
+        <ImageUpload value={content.image_url} onChange={v => setContent({ ...content, image_url: v })} label="Image" prefix="ab" />
         <label>Read More Link</label>
         <input value={content.read_more_link} onChange={e => setContent({ ...content, read_more_link: e.target.value })} />
         <button type="submit" className="btn-primary">Save Changes</button>

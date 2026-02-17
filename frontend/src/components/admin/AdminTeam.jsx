@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import ImageUpload from './ImageUpload';
 
 const API_URL = '/api';
 
 export default function AdminTeam() {
   const [members, setMembers] = useState([]);
   const [editing, setEditing] = useState(null);
+  const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ name: '', qualification: '', image_url: '', bio: '', sort_order: 0 });
   const [message, setMessage] = useState({ type: '', text: '' });
   const [loading, setLoading] = useState(true);
@@ -34,6 +36,7 @@ export default function AdminTeam() {
       if (data.success) {
         setMessage({ type: 'success', text: data.message });
         setEditing(null);
+        setShowForm(false);
         setForm({ name: '', qualification: '', image_url: '', bio: '', sort_order: 0 });
         fetchMembers();
       } else setMessage({ type: 'error', text: data.message || 'Failed' });
@@ -43,6 +46,7 @@ export default function AdminTeam() {
   };
 
   const editMember = (m) => {
+    setShowForm(true);
     setEditing(m);
     setForm({
       name: m.name || '',
@@ -54,11 +58,12 @@ export default function AdminTeam() {
   };
 
   const addNew = () => {
+    setShowForm(true);
     setEditing(null);
     setForm({
       name: '',
       qualification: '',
-      image_url: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400',
+      image_url: '',
       bio: '',
       sort_order: members.length
     });
@@ -97,22 +102,21 @@ export default function AdminTeam() {
       </div>
       <button className="btn-primary" onClick={addNew}>Add New Member</button>
 
-      {(editing || form.image_url) && (
+      {showForm && (
         <form className="admin-form" onSubmit={saveMember}>
           <h3>{editing ? 'Edit Member' : 'New Member'}</h3>
           <label>Name</label>
           <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} required />
           <label>Qualification</label>
           <input value={form.qualification} onChange={e => setForm({ ...form, qualification: e.target.value })} />
-          <label>Image URL</label>
-          <input value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} required />
+          <ImageUpload value={form.image_url} onChange={v => setForm({ ...form, image_url: v })} label="Photo" required prefix="tm" />
           <label>Bio (optional)</label>
           <textarea value={form.bio} onChange={e => setForm({ ...form, bio: e.target.value })} rows="2" />
           <label>Sort Order</label>
           <input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })} />
           <div className="admin-form-actions">
             <button type="submit" className="btn-primary">Save</button>
-            <button type="button" className="btn-outline" onClick={() => { setEditing(null); setForm({}); }}>Cancel</button>
+            <button type="button" className="btn-outline" onClick={() => { setShowForm(false); setEditing(null); setForm({ name: '', qualification: '', image_url: '', bio: '', sort_order: 0 }); }}>Cancel</button>
           </div>
         </form>
       )}

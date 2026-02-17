@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import ImageUpload from './ImageUpload';
 
 const API_URL = '/api';
 
 export default function AdminGallery() {
   const [images, setImages] = useState([]);
   const [editing, setEditing] = useState(null);
+  const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ image_url: '', title: '', category: 'clinic', sort_order: 0 });
   const [message, setMessage] = useState({ type: '', text: '' });
   const [loading, setLoading] = useState(true);
@@ -34,6 +36,7 @@ export default function AdminGallery() {
       if (data.success) {
         setMessage({ type: 'success', text: data.message });
         setEditing(null);
+        setShowForm(false);
         setForm({ image_url: '', title: '', category: 'clinic', sort_order: 0 });
         fetchImages();
       } else setMessage({ type: 'error', text: data.message || 'Failed' });
@@ -43,6 +46,7 @@ export default function AdminGallery() {
   };
 
   const editImage = (img) => {
+    setShowForm(true);
     setEditing(img);
     setForm({
       image_url: img.image_url || '',
@@ -53,9 +57,10 @@ export default function AdminGallery() {
   };
 
   const addNew = () => {
+    setShowForm(true);
     setEditing(null);
     setForm({
-      image_url: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600',
+      image_url: '',
       title: '',
       category: 'clinic',
       sort_order: images.length
@@ -94,11 +99,10 @@ export default function AdminGallery() {
       </div>
       <button className="btn-primary" onClick={addNew}>Add New Image</button>
 
-      {(editing || form.image_url) && (
+      {showForm && (
         <form className="admin-form" onSubmit={saveImage}>
           <h3>{editing ? 'Edit Image' : 'New Image'}</h3>
-          <label>Image URL</label>
-          <input value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} required />
+          <ImageUpload value={form.image_url} onChange={v => setForm({ ...form, image_url: v })} label="Image" required prefix="ga" />
           <label>Title</label>
           <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} />
           <label>Category</label>
@@ -107,7 +111,7 @@ export default function AdminGallery() {
           <input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: parseInt(e.target.value) || 0 })} />
           <div className="admin-form-actions">
             <button type="submit" className="btn-primary">Save</button>
-            <button type="button" className="btn-outline" onClick={() => { setEditing(null); setForm({}); }}>Cancel</button>
+            <button type="button" className="btn-outline" onClick={() => { setShowForm(false); setEditing(null); setForm({ image_url: '', title: '', category: 'clinic', sort_order: 0 }); }}>Cancel</button>
           </div>
         </form>
       )}
