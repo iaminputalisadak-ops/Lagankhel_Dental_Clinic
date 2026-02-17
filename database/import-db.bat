@@ -19,7 +19,7 @@ if exist "C:\xampp\xampp_start.exe" start "" "C:\xampp\xampp_start.exe"
 timeout /t 3 /nobreak > nul
 
 echo Importing database...
-%MYSQL% -u root < "%SCHEMA%" 2>nul
+%MYSQL% -u root -P 3308 < "%SCHEMA%" 2>nul
 if %errorlevel% equ 0 (
     echo.
     echo [OK] Database 'lagankhel_dental' created successfully!

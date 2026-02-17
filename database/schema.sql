@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS admin_users (
 
 -- Default admin: admin / admin123 (change after first login!)
 INSERT INTO admin_users (username, password_hash, email) VALUES 
-('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin@lagankheldental.com')
+('admin', '$2y$10$dMHD8a83tqlYaeSRRVZOauWN7xOpjz5MyVzgg9m4bAXU8FUw6biEK', 'admin@lagankheldental.com')
 ON DUPLICATE KEY UPDATE username=username;
 
 -- Hero banner table (supports multiple slides for carousel)

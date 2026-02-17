@@ -7,7 +7,7 @@
  */
 
 define('DB_HOST', '127.0.0.1');
-define('DB_PORT', '3306');
+define('DB_PORT', '3308');  // XAMPP/Laragon may use 3308
 define('DB_NAME', 'lagankhel_dental');
 define('DB_USER', 'root');
 define('DB_PASS', '');  // Set your MySQL password here (XAMPP default: empty)
