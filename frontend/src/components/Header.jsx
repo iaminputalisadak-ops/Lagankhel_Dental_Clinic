@@ -9,6 +9,7 @@ const navLinks = [
     label: 'Treatments',
   },
   { path: '/gallery', label: 'Gallery' },
+  { path: '/before-after', label: 'Before-After' },
   { path: '/blog', label: 'Blog' },
   { path: '/contact', label: 'Contact Us' },
 ];

@@ -9,6 +9,7 @@ import AdminServices from '../../components/admin/AdminServices';
 import AdminTeam from '../../components/admin/AdminTeam';
 import AdminBlog from '../../components/admin/AdminBlog';
 import AdminContact from '../../components/admin/AdminContact';
+import AdminBeforeAfter from '../../components/admin/AdminBeforeAfter';
 
 const API_URL = '/api/admin';
 
@@ -45,6 +46,7 @@ export default function AdminDashboard() {
       <nav className="admin-tabs">
         <button className={activeTab === 'hero' ? 'active' : ''} onClick={() => setActiveTab('hero')}>Hero Banner</button>
         <button className={activeTab === 'gallery' ? 'active' : ''} onClick={() => setActiveTab('gallery')}>Gallery</button>
+        <button className={activeTab === 'beforeafter' ? 'active' : ''} onClick={() => setActiveTab('beforeafter')}>Before-After</button>
         <button className={activeTab === 'about' ? 'active' : ''} onClick={() => setActiveTab('about')}>About (Home)</button>
         <button className={activeTab === 'aboutpage' ? 'active' : ''} onClick={() => setActiveTab('aboutpage')}>About Page</button>
         <button className={activeTab === 'why' ? 'active' : ''} onClick={() => setActiveTab('why')}>Why Choose Us</button>
@@ -56,6 +58,7 @@ export default function AdminDashboard() {
       <main className="admin-content">
         {activeTab === 'hero' && <AdminHero />}
         {activeTab === 'gallery' && <AdminGallery />}
+        {activeTab === 'beforeafter' && <AdminBeforeAfter />}
         {activeTab === 'about' && <AdminAbout />}
         {activeTab === 'aboutpage' && <AdminAboutPage />}
         {activeTab === 'why' && <AdminWhyChoose />}

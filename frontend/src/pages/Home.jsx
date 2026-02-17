@@ -7,6 +7,7 @@ import WhyChooseUs from '../components/sections/WhyChooseUs';
 import Services from '../components/sections/Services';
 import Stats from '../components/sections/Stats';
 import Team from '../components/sections/Team';
+import BeforeAfterSection from '../components/sections/BeforeAfterSection';
 import GallerySection from '../components/sections/GallerySection';
 import BlogPreview from '../components/sections/BlogPreview';
 import BookCta from '../components/sections/BookCta';
@@ -21,6 +22,7 @@ export default function Home() {
       <WhyChooseUs />
       <Services />
       <Stats />
+      <BeforeAfterSection />
       <Team />
       <GallerySection />
       <BlogPreview />

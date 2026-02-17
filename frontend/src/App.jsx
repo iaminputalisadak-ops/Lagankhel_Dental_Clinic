@@ -7,6 +7,7 @@ import Gallery from './pages/Gallery';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import Contact from './pages/Contact';
+import BeforeAfter from './pages/BeforeAfter';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="about" element={<About />} />
           <Route path="treatments" element={<Treatments />} />
           <Route path="gallery" element={<Gallery />} />
+          <Route path="before-after" element={<BeforeAfter />} />
           <Route path="blog" element={<Blog />} />
           <Route path="blog/:slug" element={<BlogPost />} />
           <Route path="contact" element={<Contact />} />

@@ -624,6 +624,149 @@ a:hover {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* Before-After Page */
+.before-after-banner {
+  background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+.before-after-banner h1,
+.before-after-banner h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--text);
+  font-weight: 700;
+  margin: 0;
+}
+.before-after-section-home .before-after-subtitle {
+  text-align: center;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+.before-after-section-home .before-after-heading {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.before-after-cta {
+  text-align: center;
+  margin-top: 2rem;
+}
+.before-after-heading {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  color: var(--primary-dark);
+  margin-bottom: 2rem;
+}
+.before-after-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+.before-after-empty { color: var(--text-muted); text-align: center; padding: 3rem; }
+
+/* Before-After Slider (image comparison) */
+.before-after-slider {
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: col-resize;
+  user-select: none;
+  touch-action: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.ba-before,
+.ba-after {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.ba-before { z-index: 0; }
+.ba-after {
+  z-index: 1;
+  transition: clip-path 0.05s ease-out;
+}
+.ba-handle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: col-resize;
+}
+.ba-handle-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  background: white;
+  box-shadow: 0 0 4px rgba(0,0,0,0.3);
+}
+.ba-handle-circle {
+  position: relative;
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  color: var(--text);
+}
+.ba-handle-circle svg { width: 20px; height: 20px; }
+.ba-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.6));
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+@media (max-width: 900px) {
+  .before-after-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .before-after-grid { grid-template-columns: 1fr; }
+}
+
+/* Admin Before-After */
+.admin-before-after-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.admin-ba-item { text-align: center; }
+.admin-ba-preview {
+  position: relative;
+  aspect-ratio: 4/3;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+.admin-ba-preview-before,
+.admin-ba-preview-after {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.admin-ba-preview-before { clip-path: inset(0 50% 0 0); }
+.admin-ba-preview-after { clip-path: inset(0 0 0 50%); }
+
 /* Team */
 .team-grid {
   display: grid;
