@@ -69,8 +69,8 @@ export default function BeforeAfterSlider({ beforeImage, afterImage, title }) {
           </svg>
         </div>
       </div>
-      {title && <p className="ba-title">{title}</p>}
       </div>
+      {title && <p className="ba-title">{title}</p>}
     </div>
   );
 }

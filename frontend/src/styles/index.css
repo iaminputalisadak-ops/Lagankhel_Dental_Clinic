@@ -673,6 +673,7 @@ a:hover {
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
+.before-after-card > *:last-child { border-radius: 0 0 12px 12px; }
 .ba-labels {
   display: flex;
   justify-content: space-between;
@@ -689,7 +690,7 @@ a:hover {
   position: relative;
   aspect-ratio: 4/3;
   overflow: hidden;
-  border-radius: 0 0 12px 12px;
+  border-radius: 0;
   cursor: col-resize;
   user-select: none;
   touch-action: none;
@@ -743,16 +744,16 @@ a:hover {
 }
 .ba-handle-circle svg { width: 20px; height: 20px; }
 .ba-title {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   margin: 0;
   padding: 0.75rem 1rem;
-  background: linear-gradient(transparent, rgba(0,0,0,0.6));
-  color: white;
-  font-size: 0.9rem;
+  background: var(--bg-alt);
+  color: var(--text);
+  font-size: 0.95rem;
   font-weight: 600;
+  text-align: center;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 @media (max-width: 900px) {
   .before-after-grid { grid-template-columns: repeat(2, 1fr); }
