@@ -66,6 +66,99 @@ INSERT INTO gallery_images (image_url, title, category, sort_order) VALUES
 ('https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=600', 'Patient Care', 'clinic', 6),
 ('https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600', 'Professional Care', 'clinic', 7);
 
+-- About section content (editable by admin)
+CREATE TABLE IF NOT EXISTS about_content (
+    id INT PRIMARY KEY DEFAULT 1,
+    section_heading VARCHAR(100) DEFAULT 'ABOUT OUR CLINIC',
+    main_title VARCHAR(255) DEFAULT 'Welcome to Lagankhel Dental Clinic',
+    intro_text TEXT,
+    feature1_title VARCHAR(100) DEFAULT 'Expert Care',
+    feature1_desc TEXT,
+    feature2_title VARCHAR(100) DEFAULT 'Personalized Approach',
+    feature2_desc TEXT,
+    image_url VARCHAR(500),
+    read_more_link VARCHAR(255) DEFAULT '/about',
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    CHECK (id = 1)
+);
+
+INSERT INTO about_content (section_heading, main_title, intro_text, feature1_title, feature1_desc, feature2_title, feature2_desc, image_url, read_more_link) VALUES
+('ABOUT OUR CLINIC', 'Welcome to Lagankhel Dental Clinic',
+ 'Welcome to Lagankhel Dental Clinic where your journey to optimal oral health and a confident smile begins. Our team of experienced dentists is committed to providing personalized care in a warm and welcoming environment.',
+ 'Expert Care', 'Our team of skilled dental professionals at Lagankhel Dental Clinic is dedicated to providing expert care tailored to your individual needs.',
+ 'Personalized Approach', 'At Lagankhel Dental Clinic, we understand that every patient is unique, which is why we take a personalized approach to your dental care.',
+ 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800',
+ '/about')
+ON DUPLICATE KEY UPDATE section_heading=section_heading;
+
+-- Why Choose Us section (editable by admin)
+CREATE TABLE IF NOT EXISTS why_choose_content (
+    id INT PRIMARY KEY DEFAULT 1,
+    section_heading VARCHAR(100) DEFAULT 'WHAT WE DO',
+    main_title VARCHAR(255) DEFAULT 'Why Choose us?',
+    intro_text TEXT,
+    feature1_title VARCHAR(100), feature1_desc TEXT,
+    feature2_title VARCHAR(100), feature2_desc TEXT,
+    feature3_title VARCHAR(100), feature3_desc TEXT,
+    feature4_title VARCHAR(100), feature4_desc TEXT,
+    feature5_title VARCHAR(100), feature5_desc TEXT,
+    feature6_title VARCHAR(100), feature6_desc TEXT,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+INSERT INTO why_choose_content (id, section_heading, main_title, intro_text, feature1_title, feature1_desc, feature2_title, feature2_desc, feature3_title, feature3_desc, feature4_title, feature4_desc, feature5_title, feature5_desc, feature6_title, feature6_desc) VALUES
+(1, 'WHAT WE DO', 'Why Choose us?',
+ 'At Lagankhel Dental Clinic, we believe in providing our patients with treatments which includes their involvement at all times. Our patients are the stars where we have set a standard, in providing a dental care with a feeling of being at home.',
+ 'Comfort and Convenience', 'Your comfort and convenience are our top priorities at Lagankhel Dental Clinic. From our warm and inviting office environment to our flexible scheduling options',
+ 'Customized Treatment Plans', 'We understand your smile is unique. We take the time to listen to your concerns and goals, crafting a personalized treatment plan to achieve your desired results.',
+ 'Modern Technology', 'Modern technology in dentistry has revolutionized patient care through advancements such as digital imaging, which provides precise and detailed visuals',
+ 'Affordable Service', 'We believe high-quality dentistry shouldn''t break the bank. We offer competitive rates and transparent pricing, so you can make informed decisions about your oral health.',
+ 'Premium Dental Care', 'Experience the difference a healthy smile makes! We use top-of-the-line materials and equipment to deliver exceptional results and a comfortable experience.',
+ '10,000+ Happy Clients', 'Our commitment to exceptional care has earned the trust of over 10,000 satisfied patients. Join our growing community of happy smiles!')
+ON DUPLICATE KEY UPDATE section_heading=section_heading;
+
+-- Dental services (editable by admin - add/edit/delete)
+CREATE TABLE IF NOT EXISTS dental_services (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    image_url VARCHAR(500) NOT NULL,
+    link VARCHAR(255) DEFAULT '/treatments',
+    sort_order INT DEFAULT 0,
+    is_active TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO dental_services (title, image_url, link, sort_order) VALUES
+('Orthodontics', 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600', '/treatments', 0),
+('Root Canal', 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=600', '/treatments', 1),
+('Dental Oral Surgery', 'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600', '/treatments', 2),
+('Cosmetic Dentistry', 'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=600', '/treatments', 3),
+('Dental Implant And Prosthetics', 'https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=600', '/treatments', 4),
+('Restorative Dentistry', 'https://images.unsplash.com/photo-1629909615782-3a4c1b24a8f2?w=600', '/treatments', 5);
+
+-- Team members (editable by admin - add/edit/delete)
+CREATE TABLE IF NOT EXISTS team_members (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    qualification VARCHAR(500),
+    image_url VARCHAR(500),
+    bio TEXT,
+    sort_order INT DEFAULT 0,
+    is_active TINYINT(1) DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO team_members (name, qualification, image_url, sort_order) VALUES
+('Dr. Jinesh Babu R', 'BDS, MDS ORTHODONTICS AND DENTOFACIAL ORTHOPAEDICS', 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400', 0),
+('Dr. Sushritha Sricharan', 'BDS, MDS CONSERVATIVE DENTISTRY AND ENDODONTICS', 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400', 1),
+('Dr. Sajan Shetty', 'BDS, MDS PROSTHODONTICS & IMPLANTOLOGIST', 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=400', 2),
+('Dr. Faizuddin Imran', 'BDS, MDS PERIODONTOLOGY & IMPLANTOLOGY', 'https://images.unsplash.com/photo-1612349316228-5942a9b489c2?w=400', 3),
+('Dr. Sibikar P', 'BDS, MDS PEDODONTICS AND PREVENTIVE DENTISTRY', 'https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=400', 4),
+('Dr. Saurabh Pillai', 'BDS, MDS ORAL AND MAXILLOFACIAL SURGERY', 'https://images.unsplash.com/photo-1618499891438-8cf651bb3104?w=400', 5),
+('Dr. Arvind Raghunath', 'BDS, MDS PERIODONTOLOGY & IMPLANTOLOGY', 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=400', 6),
+('Dr. Karen C. Stellus', 'BDS, RESIDENT DENTIST', 'https://images.unsplash.com/photo-1594824476967-48c8b964273f?w=400', 7),
+('Abhinaya', 'DENTAL ASSISTANT', 'https://images.unsplash.com/photo-1551076805-e1869033e561?w=400', 8);
+
 -- Site settings (key-value store)
 CREATE TABLE IF NOT EXISTS site_settings (
     id INT AUTO_INCREMENT PRIMARY KEY,

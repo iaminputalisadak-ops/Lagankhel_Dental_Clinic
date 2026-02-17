@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react';
 import { Navigate, useNavigate, Link } from 'react-router-dom';
 import AdminHero from '../../components/admin/AdminHero';
 import AdminGallery from '../../components/admin/AdminGallery';
+import AdminAbout from '../../components/admin/AdminAbout';
+import AdminWhyChoose from '../../components/admin/AdminWhyChoose';
+import AdminServices from '../../components/admin/AdminServices';
+import AdminTeam from '../../components/admin/AdminTeam';
 
 const API_URL = '/api/admin';
 
@@ -38,10 +42,18 @@ export default function AdminDashboard() {
       <nav className="admin-tabs">
         <button className={activeTab === 'hero' ? 'active' : ''} onClick={() => setActiveTab('hero')}>Hero Banner</button>
         <button className={activeTab === 'gallery' ? 'active' : ''} onClick={() => setActiveTab('gallery')}>Gallery</button>
+        <button className={activeTab === 'about' ? 'active' : ''} onClick={() => setActiveTab('about')}>About</button>
+        <button className={activeTab === 'why' ? 'active' : ''} onClick={() => setActiveTab('why')}>Why Choose Us</button>
+        <button className={activeTab === 'services' ? 'active' : ''} onClick={() => setActiveTab('services')}>Services</button>
+        <button className={activeTab === 'team' ? 'active' : ''} onClick={() => setActiveTab('team')}>Team</button>
       </nav>
       <main className="admin-content">
         {activeTab === 'hero' && <AdminHero />}
         {activeTab === 'gallery' && <AdminGallery />}
+        {activeTab === 'about' && <AdminAbout />}
+        {activeTab === 'why' && <AdminWhyChoose />}
+        {activeTab === 'services' && <AdminServices />}
+        {activeTab === 'team' && <AdminTeam />}
       </main>
     </div>
   );
