@@ -61,7 +61,6 @@ define('DB_USER', 'root');
 define('DB_PASS', 'your_password');
 ```
 
-**Default admin:** `admin` / `admin123` — change this after first login!
 
 ### 2. PHP Backend
 
