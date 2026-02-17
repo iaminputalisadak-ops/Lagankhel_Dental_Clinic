@@ -3,6 +3,7 @@ import { Navigate, useNavigate, Link } from 'react-router-dom';
 import AdminHero from '../../components/admin/AdminHero';
 import AdminGallery from '../../components/admin/AdminGallery';
 import AdminAbout from '../../components/admin/AdminAbout';
+import AdminAboutPage from '../../components/admin/AdminAboutPage';
 import AdminWhyChoose from '../../components/admin/AdminWhyChoose';
 import AdminServices from '../../components/admin/AdminServices';
 import AdminTeam from '../../components/admin/AdminTeam';
@@ -44,7 +45,8 @@ export default function AdminDashboard() {
       <nav className="admin-tabs">
         <button className={activeTab === 'hero' ? 'active' : ''} onClick={() => setActiveTab('hero')}>Hero Banner</button>
         <button className={activeTab === 'gallery' ? 'active' : ''} onClick={() => setActiveTab('gallery')}>Gallery</button>
-        <button className={activeTab === 'about' ? 'active' : ''} onClick={() => setActiveTab('about')}>About</button>
+        <button className={activeTab === 'about' ? 'active' : ''} onClick={() => setActiveTab('about')}>About (Home)</button>
+        <button className={activeTab === 'aboutpage' ? 'active' : ''} onClick={() => setActiveTab('aboutpage')}>About Page</button>
         <button className={activeTab === 'why' ? 'active' : ''} onClick={() => setActiveTab('why')}>Why Choose Us</button>
         <button className={activeTab === 'services' ? 'active' : ''} onClick={() => setActiveTab('services')}>Services</button>
         <button className={activeTab === 'team' ? 'active' : ''} onClick={() => setActiveTab('team')}>Team</button>
@@ -55,6 +57,7 @@ export default function AdminDashboard() {
         {activeTab === 'hero' && <AdminHero />}
         {activeTab === 'gallery' && <AdminGallery />}
         {activeTab === 'about' && <AdminAbout />}
+        {activeTab === 'aboutpage' && <AdminAboutPage />}
         {activeTab === 'why' && <AdminWhyChoose />}
         {activeTab === 'services' && <AdminServices />}
         {activeTab === 'team' && <AdminTeam />}

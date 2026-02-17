@@ -414,6 +414,46 @@ a:hover {
   .about-section-new .about-right { order: -1; }
 }
 
+/* About Page (full page - House of Dentistry style) */
+.about-page-full .section-subtitle { color: var(--text-muted); font-size: 0.8rem; letter-spacing: 0.15em; }
+.about-intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.about-intro-text { max-width: 560px; }
+.about-page-title { font-family: var(--font-display); font-size: 2.25rem; color: var(--primary-dark); margin-bottom: 1rem; }
+.about-intro-p { color: var(--text); line-height: 1.7; }
+.about-intro-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+  aspect-ratio: 4/3;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.1);
+}
+.about-cta-banner {
+  background: linear-gradient(135deg, #7dd3fc 0%, #38bdf8 100%);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+.about-cta-banner h2 { font-size: 1.5rem; color: white; margin-bottom: 0.75rem; font-weight: 700; }
+.about-cta-banner p { color: rgba(255,255,255,0.95); font-size: 1rem; }
+.about-cta-banner a { color: white; text-decoration: underline; font-weight: 600; }
+.about-detail-section { padding: 4rem 0; }
+.about-why-heading { font-family: var(--font-display); font-size: 1.5rem; color: var(--primary-dark); margin-bottom: 1rem; }
+.about-repeat-intro { color: var(--text); margin-bottom: 1.5rem; line-height: 1.7; }
+.about-block { padding-left: 1.25rem; margin: 1.5rem 0; }
+.about-block-blue { border-left: 4px solid var(--primary); }
+.about-block p { margin: 0; line-height: 1.7; color: var(--text); }
+.about-block .btn-primary { margin-top: 1rem; }
+.about-paragraph { color: var(--text); margin-bottom: 1rem; line-height: 1.7; }
+@media (max-width: 900px) {
+  .about-intro-grid { grid-template-columns: 1fr; }
+  .about-intro-image { order: -1; }
+}
+
 /* Why Choose Us */
 .why-intro { max-width: 700px; margin-bottom: 2rem; color: var(--text-muted); }
 .features-grid {
