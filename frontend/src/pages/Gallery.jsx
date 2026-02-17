@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import SeoHead from '../components/SeoHead';
 
 const API_URL = '/api';
 const DEFAULT_IMAGES = [
@@ -25,6 +26,7 @@ export default function Gallery() {
 
   return (
     <div className="page gallery-page">
+      <SeoHead title="Gallery" description="View photos of Lagankhel Dental Clinic - our facilities, equipment, and patient care environment in Lalitpur." path="/gallery" />
       <section className="page-hero">
         <div className="container">
           <h1>Gallery</h1>

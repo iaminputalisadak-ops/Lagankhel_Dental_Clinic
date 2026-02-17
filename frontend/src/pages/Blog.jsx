@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import SeoHead from '../components/SeoHead';
 import { Link } from 'react-router-dom';
 
 const API_URL = '/api';
@@ -29,6 +30,7 @@ export default function Blog() {
 
   return (
     <div className="page blog-page">
+      <SeoHead title="Blog" description="Dental health tips, treatment guides, and oral care advice from Lagankhel Dental Clinic in Lalitpur." path="/blog" />
       <section className="page-hero">
         <div className="container">
           <h1>Blog</h1>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import SeoHead from '../components/SeoHead';
 import { useParams, Link } from 'react-router-dom';
 
 const API_URL = '/api';
@@ -22,6 +23,7 @@ export default function BlogPost() {
 
   return (
     <div className="page blog-post-page">
+      {post && <SeoHead title={post.title} description={post.excerpt || post.title} path={`/blog/${post.slug}`} image={post.image_url} type="article" />}
       <article className="blog-post-full">
         <div className="container">
           <Link to="/blog" className="blog-back">← Back to Blog</Link>
@@ -35,9 +37,7 @@ export default function BlogPost() {
               <img src={post.image_url} alt={post.title} />
             </div>
           )}
-          <div className="blog-post-content">
-            {(post.content || '').split('\n').filter(Boolean).map((p, i) => <p key={i}>{p}</p>)}
-          </div>
+          <div className="blog-post-content" dangerouslySetInnerHTML={{ __html: post.content || '' }} />
         </div>
       </article>
     </div>

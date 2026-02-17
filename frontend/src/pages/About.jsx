@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import SeoHead from '../components/SeoHead';
 import { Link } from 'react-router-dom';
 import BookAppointmentModal from '../components/BookAppointmentModal';
 import Team from '../components/sections/Team';
@@ -37,13 +38,14 @@ export default function About() {
 
   return (
     <div className="page about-page about-page-full">
+      <SeoHead title="About Us" description="Learn about Lagankhel Dental Clinic - our team, values, and commitment to quality dental care in Lalitpur." path="/about" />
       <section className="section about-intro-section">
         <div className="container">
           <div className="about-intro-grid">
             <div className="about-intro-text">
               <p className="section-subtitle">{content.section_heading}</p>
               <h1 className="about-page-title">{content.page_title}</h1>
-              <p className="about-intro-p">{content.intro_paragraph}</p>
+              <div className="about-intro-p" dangerouslySetInnerHTML={{ __html: content.intro_paragraph || '' }} />
             </div>
             <div className="about-intro-image">
               <img src={content.main_image_url} alt="Dental care" loading="lazy" />
@@ -69,10 +71,10 @@ export default function About() {
       <section className="section about-detail-section">
         <div className="container">
           {content.why_heading && <h2 className="about-why-heading">{content.why_heading}</h2>}
-          <p className="about-repeat-intro">{content.intro_paragraph}</p>
+          <div className="about-repeat-intro" dangerouslySetInnerHTML={{ __html: content.intro_paragraph || '' }} />
           {content.core_value_text && (
             <div className="about-block about-block-blue">
-              <p>{content.core_value_text}</p>
+              <div dangerouslySetInnerHTML={{ __html: content.core_value_text || '' }} />
             </div>
           )}
           {content.facilities_text && <p className="about-paragraph">{content.facilities_text}</p>}

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import RichTextEditor from './RichTextEditor';
 
 const API_URL = '/api';
 
@@ -119,9 +120,9 @@ export default function AdminBlog() {
           <label>Featured Image URL</label>
           <input value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} />
           <label>Excerpt</label>
-          <textarea value={form.excerpt} onChange={e => setForm({ ...form, excerpt: e.target.value })} rows="2" />
+          <RichTextEditor value={form.excerpt} onChange={v => setForm({ ...form, excerpt: v })} placeholder="Brief summary..." simple />
           <label>Content</label>
-          <textarea value={form.content} onChange={e => setForm({ ...form, content: e.target.value })} rows="6" />
+          <RichTextEditor value={form.content} onChange={v => setForm({ ...form, content: v })} placeholder="Write your blog post..." />
           <label>Author</label>
           <input value={form.author} onChange={e => setForm({ ...form, author: e.target.value })} />
           <label><input type="checkbox" checked={!!form.published} onChange={e => setForm({ ...form, published: e.target.checked ? 1 : 0 })} /> Published</label>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import SeoHead from '../components/SeoHead';
 import BookAppointmentModal from '../components/BookAppointmentModal';
 
 const API_URL = '/api';
@@ -55,6 +56,7 @@ export default function Contact() {
 
   return (
     <div className="page contact-page">
+      <SeoHead title="Contact Us" description="Contact Lagankhel Dental Clinic in Lalitpur. Call us, visit our clinic, or book an appointment online. We're here for your dental care." path="/contact" />
       <section className="page-hero">
         <div className="container">
           <h1>Contact Us</h1>

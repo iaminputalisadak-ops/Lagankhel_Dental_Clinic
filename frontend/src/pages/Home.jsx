@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import SeoHead from '../components/SeoHead';
 import { Link } from 'react-router-dom';
 import BookAppointmentModal from '../components/BookAppointmentModal';
 import Hero from '../components/sections/Hero';
@@ -17,6 +18,7 @@ export default function Home() {
 
   return (
     <>
+      <SeoHead title="Home" description="Lagankhel Dental Clinic - Best Dental Clinic in Lalitpur. Your smile is our pride. Quality dental care, orthodontics, root canal, and more. Book your appointment today." path="/" />
       <Hero onBookClick={() => setShowModal(true)} />
       <AboutSection />
       <WhyChooseUs />

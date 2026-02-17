@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import RichTextEditor from './RichTextEditor';
 
 const API_URL = '/api';
 
@@ -51,7 +52,7 @@ export default function AdminAboutPage() {
         <label>Main Image URL</label>
         <input value={content.main_image_url} onChange={e => setContent({ ...content, main_image_url: e.target.value })} />
         <label>Intro Paragraph</label>
-        <textarea value={content.intro_paragraph} onChange={e => setContent({ ...content, intro_paragraph: e.target.value })} rows="4" />
+        <RichTextEditor value={content.intro_paragraph} onChange={v => setContent({ ...content, intro_paragraph: v })} placeholder="Clinic introduction..." simple />
         <h4>CTA Banner (Invisalign)</h4>
         <label>Banner Heading</label>
         <input value={content.cta_banner_heading} onChange={e => setContent({ ...content, cta_banner_heading: e.target.value })} />
@@ -63,7 +64,7 @@ export default function AdminAboutPage() {
         <label>Why Heading</label>
         <input value={content.why_heading} onChange={e => setContent({ ...content, why_heading: e.target.value })} />
         <label>Core Value Block (blue border)</label>
-        <textarea value={content.core_value_text} onChange={e => setContent({ ...content, core_value_text: e.target.value })} rows="3" />
+        <RichTextEditor value={content.core_value_text} onChange={v => setContent({ ...content, core_value_text: v })} placeholder="Core values..." simple />
         <label>Facilities Paragraph</label>
         <textarea value={content.facilities_text} onChange={e => setContent({ ...content, facilities_text: e.target.value })} rows="3" />
         <label>Quality Paragraph</label>
