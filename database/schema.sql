@@ -173,7 +173,8 @@ INSERT INTO site_settings (setting_key, setting_value) VALUES
 ('contact_phone', '+977 9800000000'),
 ('contact_landline', '01-1234567'),
 ('contact_address', 'Lagankhel, Lalitpur, Nepal'),
-('opening_hours', 'Sunday - Friday, 10:00 AM - 7:00 PM')
+('opening_hours', 'Sunday - Friday, 10:00 AM - 7:00 PM'),
+('map_embed_url', '')
 ON DUPLICATE KEY UPDATE setting_key=setting_key;
 
 -- Appointments table

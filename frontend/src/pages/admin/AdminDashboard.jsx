@@ -7,6 +7,7 @@ import AdminWhyChoose from '../../components/admin/AdminWhyChoose';
 import AdminServices from '../../components/admin/AdminServices';
 import AdminTeam from '../../components/admin/AdminTeam';
 import AdminBlog from '../../components/admin/AdminBlog';
+import AdminContact from '../../components/admin/AdminContact';
 
 const API_URL = '/api/admin';
 
@@ -48,6 +49,7 @@ export default function AdminDashboard() {
         <button className={activeTab === 'services' ? 'active' : ''} onClick={() => setActiveTab('services')}>Services</button>
         <button className={activeTab === 'team' ? 'active' : ''} onClick={() => setActiveTab('team')}>Team</button>
         <button className={activeTab === 'blog' ? 'active' : ''} onClick={() => setActiveTab('blog')}>Blog</button>
+        <button className={activeTab === 'contact' ? 'active' : ''} onClick={() => setActiveTab('contact')}>Contact & Map</button>
       </nav>
       <main className="admin-content">
         {activeTab === 'hero' && <AdminHero />}
@@ -57,6 +59,7 @@ export default function AdminDashboard() {
         {activeTab === 'services' && <AdminServices />}
         {activeTab === 'team' && <AdminTeam />}
         {activeTab === 'blog' && <AdminBlog />}
+        {activeTab === 'contact' && <AdminContact />}
       </main>
     </div>
   );

@@ -1,13 +1,28 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BookAppointmentModal from '../components/BookAppointmentModal';
 
 const API_URL = '/api';
+const DEFAULT = {
+  contact_address: 'Lagankhel, Lalitpur, Nepal',
+  contact_phone: '+977 9800000000',
+  contact_landline: '01-1234567',
+  opening_hours: 'Sunday - Friday, 10:00 AM - 7:00 PM',
+  map_embed_url: ''
+};
 
 export default function Contact() {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+  const [settings, setSettings] = useState(DEFAULT);
+
+  useEffect(() => {
+    fetch(`${API_URL}/settings.php`)
+      .then(res => res.json())
+      .then(data => data.success && data.settings && setSettings({ ...DEFAULT, ...data.settings }))
+      .catch(() => {});
+  }, []);
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -35,6 +50,9 @@ export default function Contact() {
     }
   };
 
+  const mapUrl = settings.map_embed_url?.trim();
+  const isEmbedUrl = mapUrl && (mapUrl.includes('embed') || mapUrl.includes('iframe'));
+
   return (
     <div className="page contact-page">
       <section className="page-hero">
@@ -48,11 +66,31 @@ export default function Contact() {
           <div className="contact-info">
             <h3>Get in Touch</h3>
             <div className="contact-details">
-              <p><strong>Our Location</strong><br />Lagankhel, Lalitpur, Nepal</p>
-              <p><strong>Call Today</strong><br /><a href="tel:+9779800000000">+977 9800000000</a></p>
-              <p><strong>Landline</strong><br />01-1234567</p>
-              <p><strong>Opening Hours</strong><br />Sunday - Friday<br />10:00 AM - 7:00 PM</p>
+              <p><strong>Our Location</strong><br />{settings.contact_address}</p>
+              <p><strong>Call Today</strong><br /><a href={`tel:${settings.contact_phone?.replace(/\s/g, '')}`}>{settings.contact_phone}</a></p>
+              <p><strong>Landline</strong><br />{settings.contact_landline}</p>
+              <p><strong>Opening Hours</strong><br />{settings.opening_hours}</p>
             </div>
+            {mapUrl && (
+              <div className="contact-map-wrap">
+                {isEmbedUrl ? (
+                  <iframe
+                    src={mapUrl}
+                    width="100%"
+                    height="250"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Clinic location"
+                  />
+                ) : (
+                  <a href={mapUrl.startsWith('http') ? mapUrl : `https://www.google.com/maps/search/${encodeURIComponent(mapUrl)}`} target="_blank" rel="noopener noreferrer" className="contact-map-link">
+                    View on Map
+                  </a>
+                )}
+              </div>
+            )}
           </div>
           <div className="contact-form-wrap">
             <h3>Send us a Message</h3>
