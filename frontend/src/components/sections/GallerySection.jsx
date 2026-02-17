@@ -1,4 +1,7 @@
-const galleryImages = [
+import { useState, useEffect } from 'react';
+
+const API_URL = '/api';
+const DEFAULT_IMAGES = [
   'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=400',
   'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=400',
   'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400',
@@ -8,6 +11,18 @@ const galleryImages = [
 ];
 
 export default function GallerySection() {
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    fetch(`${API_URL}/gallery.php`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.images?.length) setImages(data.images);
+        else setImages(DEFAULT_IMAGES.map((url, i) => ({ image_url: url, title: `Clinic ${i + 1}` })));
+      })
+      .catch(() => setImages(DEFAULT_IMAGES.map((url, i) => ({ image_url: url, title: `Clinic ${i + 1}` }))));
+  }, []);
+
   return (
     <section className="section gallery-section">
       <div className="container">
@@ -15,9 +30,9 @@ export default function GallerySection() {
         <h2 className="section-title">Gallery</h2>
         <p className="gallery-subtitle">Our Clinic Showcasing</p>
         <div className="gallery-grid">
-          {galleryImages.map((img, i) => (
-            <div key={i} className="gallery-item">
-              <img src={img} alt={`Clinic ${i + 1}`} loading="lazy" />
+          {images.map((img, i) => (
+            <div key={img.id || i} className="gallery-item gallery-item-animate">
+              <img src={img.image_url} alt={img.title || `Clinic ${i + 1}`} loading="lazy" />
             </div>
           ))}
         </div>
